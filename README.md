@@ -10,6 +10,8 @@ The controller was tested in Simulink and in SimulIDE using a virtual Arduino Un
 
 ## 📁 Repository Structure
 
+```
+
 Transmission_Control_Project/  
 ├── controller_arduino.slx  
 ├── controller_lab4.slx  
@@ -24,7 +26,7 @@ Transmission_Control_Project/
   ├── failure_mode.jpg  
   ├── stateflow_chart_1.jpg  
   └── stateflow_chart_2.jpg  
-
+```
 ---
 
 ## Project Overview
