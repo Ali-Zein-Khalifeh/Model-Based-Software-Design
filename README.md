@@ -1,142 +1,102 @@
-Automatic Transmission Control System (Simulink + Arduino)
+# Automatic Transmission Control System (Simulink + Arduino)
 
-This project implements an Automatic Transmission Controller using
-MATLAB/Simulink, Stateflow, and Arduino code generation.
-The controller evaluates driver inputs (brake pedal, throttle, selector position)
-and vehicle speed to determine the correct transmission state, while outputting
-a torque request signal for each mode. The system was tested both in Simulink
-and in SimulIDE using a virtual Arduino Uno.
+This project implements an **Automatic Transmission Controller** using  
+**MATLAB/Simulink**, **Stateflow**, and **Arduino code generation**.  
+The controller reads driver inputs (brake, throttle, selector position, vehicle speed)  
+and determines the correct transmission state while generating a torque request signal.  
+The controller was tested in Simulink and in SimulIDE using a virtual Arduino Uno.
 
-Project Overview
+---
 
-The controller operates as a state machine with the following modes:
+## 📁 Repository Structure
 
-Park (P)
+Transmission_Control_Project/  
+├── controller_arduino.slx  
+├── controller_lab4.slx  
+├── TransmissionState.m  
+├── controller_arduino.hex  
+└── Results/  
+  ├── park_state.jpg  
+  ├── drive_state.jpg  
+  ├── reverse_state.jpg  
+  ├── neutral_state.jpg  
+  ├── brake_state.jpg  
+  ├── failure_mode.jpg  
+  ├── stateflow_chart_1.jpg  
+  └── stateflow_chart_2.jpg  
 
-Reverse (R)
+---
 
-Neutral (N)
+## Project Overview
 
-Drive (D)
+The controller operates as a **state machine** with the following modes:
 
-Brake Mode
+- Park (P)  
+- Reverse (R)  
+- Neutral (N)  
+- Drive (D)  
+- Brake Mode  
+- Failure Mode (selector inconsistency or CAN failure)
 
-Failure Mode (when selector sensors are inconsistent or CAN failure signal is high)
+The system computes:
 
-The system reads multiple inputs, processes them, and computes:
+- Transmission state  
+- Torque request  
+- Error/failure conditions  
 
-Transmission state
+---
 
-Requested torque
+## How It Works
 
-Error/failure conditions
+### Input Processing
+The controller reads:
+- Brake pedal position  
+- Throttle pedal position  
+- Selector lever (P / R / N / D)  
+- Vehicle speed  
+- CAN failure flag  
 
-Code is automatically generated and uploaded to an Arduino Uno, which can be tested
-using SimulIDE.
+### Stateflow Controller
+Implements:
+- State transitions  
+- Safety conditions (no Park while moving)  
+- Brake/throttle interlocks  
+- Failure detection (selector mismatch or CAN error)  
+- Torque request output  
 
-How It Works
-1. Input Processing
-
-Inputs include:
-
-Brake pedal position
-
-Throttle pedal position
-
-Transmission selector (P, R, N, D)
-
-Vehicle speed
-
-CAN failure flag
-
-Signals are scaled and converted before feeding into the Stateflow controller.
-
-2. Stateflow Controller
-
-The Stateflow chart implements the transmission logic:
-
-Manages transitions between all states
-
-Checks speed conditions (e.g., cannot shift to “Park” while moving)
-
-Handles brake/throttle interlocks
-
-Detects inconsistent selector readings and enters Failure Mode
-
-Computes torque request for each mode
-
-3. Arduino Deployment
-
+### Arduino Deployment
 Simulink generates:
+- controller_arduino.hex  
+- controller_arduino.elf  
 
-controller_arduino.hex
+These can be flashed to an Arduino Uno.  
+SimulIDE is used for hardware-in-the-loop validation.
 
-controller_arduino.elf
+---
 
-These binaries can be flashed directly to the Arduino Uno.
+## Validation in SimulIDE
 
-SimulIDE allows hardware-in-the-loop validation, simulating:
+Testing confirmed:
+- Correct state transitions  
+- Valid safety conditions  
+- Proper failure mode behavior  
+- Matching results between Simulink and Arduino execution  
 
-The Arduino board
+---
 
-Digital/analog inputs
+## Tools & Technologies
 
-Outputs representing transmission LEDs or actuators
+- MATLAB / Simulink  
+- Stateflow  
+- Arduino Uno  
+- SimulIDE  
+- C/C++ Automatic Code Generation  
+- Simulink Support Package for Arduino Hardware  
 
-📁 Repository Structure
-Transmission_Control_Project/
-│
-├── controller_arduino.slx        # Main Simulink model
-├── controller_lab4.slx           # Alternative/initial model
-├── TransmissionState.m           # MATLAB enumeration / helper file
-├── controller_arduino.hex        # Compiled firmware for Arduino
-│
-└── Results/                      # Simulation & SimulIDE screenshots
-      ├── park_state.jpg
-      ├── drive_state.jpg
-      ├── reverse_state.jpg
-      ├── neutral_state.jpg
-      ├── brake_state.jpg
-      ├── failure_mode.jpg
-      ├── stateflow_chart_1.jpg
-      └── stateflow_chart_2.jpg
+---
 
-Validation in SimulIDE
+## 👤 Author
 
-The system was tested using:
-
-Virtual Arduino Uno
-
-Potentiometers / buttons as inputs
-
-LEDs/motors to visualize outputs
-
-Real-time behavior matches Simulink simulation
-
-This step verifies that:
-
-State transitions behave as expected
-
-Failure conditions trigger correctly
-
-Torque request output changes according to state
-
-Tools & Technologies
-
-MATLAB / Simulink
-
-Stateflow
-
-Simulink Support Package for Arduino Hardware
-
-SimulIDE simulator
-
-Arduino Uno
-
-Automatic code generation (C/C++)
-
-Author
-
-Ali Zein Khalifeh
-Politecnico di Torino
-Model-Based Software Design / Embedded Systems
+**Ali Zein Khalifeh**  
+Politecnico di Torino  
+Model-Based Software Design
