@@ -101,9 +101,6 @@ Transmission_Control_Project/
       ├── stateflow_chart_1.jpg
       └── stateflow_chart_2.jpg
 
-
-(Add or remove filenames according to your actual images.)
-
 Validation in SimulIDE
 
 The system was tested using:
